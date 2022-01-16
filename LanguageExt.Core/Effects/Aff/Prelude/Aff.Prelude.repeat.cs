@@ -1,11 +1,5 @@
 using System;
-using System.Diagnostics.Contracts;
-using System.Runtime.CompilerServices;
-using System.Threading;
-using System.Threading.Tasks;
-using LanguageExt.Common;
 using LanguageExt.Effects.Traits;
-using LanguageExt.Thunks;
 
 namespace LanguageExt
 {
@@ -18,9 +12,9 @@ namespace LanguageExt
         /// <typeparam name="RT">Runtime</typeparam>
         /// <typeparam name="A">Computation bound value type</typeparam>
         /// <returns>The result of the last invocation of ma</returns>
-        public static Aff<RT, A> repeat<RT, A>(Aff<RT, A> ma) where RT : struct, HasCancel<RT> =>
-            ScheduleAff<RT, A>.Repeat(ma, Schedule.Forever);
-        
+        public static Aff<RT, A> repeat<RT, A>(Aff<RT, A> ma) where RT : struct, HasCancel<RT>
+            => ScheduleAff<RT, A>.Repeat(ma, Schedule.Forever);
+
         /// <summary>
         /// Keeps repeating the computation until it fails  
         /// </summary>
@@ -28,8 +22,8 @@ namespace LanguageExt
         /// <typeparam name="RT">Runtime</typeparam>
         /// <typeparam name="A">Computation bound value type</typeparam>
         /// <returns>The result of the last invocation of ma</returns>
-        public static Aff<A> repeat<A>(Aff<A> ma) => 
-            ScheduleAff<A>.Repeat(ma, Schedule.Forever);
+        public static Aff<A> repeat<A>(Aff<A> ma)
+            => ScheduleAff<A>.Repeat(ma, Schedule.Forever);
 
         /// <summary>
         /// Keeps repeating the computation until it fails  
@@ -39,9 +33,9 @@ namespace LanguageExt
         /// <typeparam name="RT">Runtime</typeparam>
         /// <typeparam name="A">Computation bound value type</typeparam>
         /// <returns>The result of the last invocation of ma</returns>
-        public static Aff<RT, A> repeat<RT, A>(Schedule schedule, Aff<RT, A> ma) where RT : struct, HasCancel<RT> =>
-            ScheduleAff<RT, A>.Repeat(ma, schedule);
-        
+        public static Aff<RT, A> repeat<RT, A>(Schedule<RT, A> schedule, Aff<RT, A> ma) where RT : struct, HasCancel<RT>
+            => ScheduleAff<RT, A>.Repeat(ma, schedule);
+
         /// <summary>
         /// Keeps repeating the computation until it fails  
         /// </summary>
@@ -50,10 +44,42 @@ namespace LanguageExt
         /// <typeparam name="RT">Runtime</typeparam>
         /// <typeparam name="A">Computation bound value type</typeparam>
         /// <returns>The result of the last invocation of ma</returns>
-        public static Aff<A> repeat<A>(Schedule schedule, Aff<A> ma) => 
-            ScheduleAff<A>.Repeat(ma, schedule);
-        
-        
+        public static Aff<RT, A> repeat<RT, A>(Schedule<A> schedule, Aff<RT, A> ma) where RT : struct, HasCancel<RT>
+            => ScheduleAff<RT, A>.Repeat(ma, schedule);
+
+        /// <summary>
+        /// Keeps repeating the computation until it fails  
+        /// </summary>
+        /// <param name="ma">Computation to repeat</param>
+        /// <param name="schedule">Scheduler strategy for repeating</param>
+        /// <typeparam name="RT">Runtime</typeparam>
+        /// <typeparam name="A">Computation bound value type</typeparam>
+        /// <returns>The result of the last invocation of ma</returns>
+        public static Aff<RT, A> repeat<RT, A>(Schedule schedule, Aff<RT, A> ma) where RT : struct, HasCancel<RT>
+            => ScheduleAff<RT, A>.Repeat(ma, schedule);
+
+        /// <summary>
+        /// Keeps repeating the computation until it fails  
+        /// </summary>
+        /// <param name="ma">Computation to repeat</param>
+        /// <param name="schedule">Scheduler strategy for repeating</param>
+        /// <typeparam name="RT">Runtime</typeparam>
+        /// <typeparam name="A">Computation bound value type</typeparam>
+        /// <returns>The result of the last invocation of ma</returns>
+        public static Aff<A> repeat<A>(Schedule<A> schedule, Aff<A> ma)
+            => ScheduleAff<A>.Repeat(ma, schedule);
+
+        /// <summary>
+        /// Keeps repeating the computation until it fails  
+        /// </summary>
+        /// <param name="ma">Computation to repeat</param>
+        /// <param name="schedule">Scheduler strategy for repeating</param>
+        /// <typeparam name="RT">Runtime</typeparam>
+        /// <typeparam name="A">Computation bound value type</typeparam>
+        /// <returns>The result of the last invocation of ma</returns>
+        public static Aff<A> repeat<A>(Schedule schedule, Aff<A> ma)
+            => ScheduleAff<A>.Repeat(ma, schedule);
+
         /// <summary>
         /// Keeps repeating the computation until it fails or the predicate returns false
         /// </summary>
@@ -61,9 +87,10 @@ namespace LanguageExt
         /// <typeparam name="RT">Runtime</typeparam>
         /// <typeparam name="A">Computation bound value type</typeparam>
         /// <returns>The result of the last invocation of ma</returns>
-        public static Aff<RT, A> repeatWhile<RT, A>(Aff<RT, A> ma, Func<A, bool> predicate) where RT : struct, HasCancel<RT> =>
-            ScheduleAff<RT, A>.RepeatWhile(ma, Schedule.Forever, predicate);
-        
+        public static Aff<RT, A> repeatWhile<RT, A>(Aff<RT, A> ma, Func<A, bool> predicate)
+            where RT : struct, HasCancel<RT>
+            => ScheduleAff<RT, A>.RepeatWhile(ma, Schedule.Forever, predicate);
+
         /// <summary>
         /// Keeps repeating the computation until it fails or the predicate returns false
         /// </summary>
@@ -71,8 +98,8 @@ namespace LanguageExt
         /// <typeparam name="RT">Runtime</typeparam>
         /// <typeparam name="A">Computation bound value type</typeparam>
         /// <returns>The result of the last invocation of ma</returns>
-        public static Aff<A> repeatWhile<A>(Aff<A> ma, Func<A, bool> predicate) => 
-            ScheduleAff<A>.RepeatWhile(ma, Schedule.Forever, predicate);
+        public static Aff<A> repeatWhile<A>(Aff<A> ma, Func<A, bool> predicate)
+            => ScheduleAff<A>.RepeatWhile(ma, Schedule.Forever, predicate);
 
         /// <summary>
         /// Keeps repeating the computation until it fails or the predicate returns false  
@@ -82,9 +109,34 @@ namespace LanguageExt
         /// <typeparam name="RT">Runtime</typeparam>
         /// <typeparam name="A">Computation bound value type</typeparam>
         /// <returns>The result of the last invocation of ma</returns>
-        public static Aff<RT, A> repeatWhile<RT, A>(Schedule schedule, Aff<RT, A> ma, Func<A, bool> predicate) where RT : struct, HasCancel<RT> =>
-            ScheduleAff<RT, A>.RepeatWhile(ma, schedule, predicate);
-        
+        public static Aff<RT, A> repeatWhile<RT, A>(Schedule<RT, A> schedule, Aff<RT, A> ma, Func<A, bool> predicate)
+            where RT : struct, HasCancel<RT>
+            => ScheduleAff<RT, A>.RepeatWhile(ma, schedule, predicate);
+
+        /// <summary>
+        /// Keeps repeating the computation until it fails or the predicate returns false  
+        /// </summary>
+        /// <param name="ma">Computation to repeat</param>
+        /// <param name="schedule">Scheduler strategy for repeating</param>
+        /// <typeparam name="RT">Runtime</typeparam>
+        /// <typeparam name="A">Computation bound value type</typeparam>
+        /// <returns>The result of the last invocation of ma</returns>
+        public static Aff<RT, A> repeatWhile<RT, A>(Schedule<A> schedule, Aff<RT, A> ma, Func<A, bool> predicate)
+            where RT : struct, HasCancel<RT>
+            => ScheduleAff<RT, A>.RepeatWhile(ma, schedule, predicate);
+
+        /// <summary>
+        /// Keeps repeating the computation until it fails or the predicate returns false  
+        /// </summary>
+        /// <param name="ma">Computation to repeat</param>
+        /// <param name="schedule">Scheduler strategy for repeating</param>
+        /// <typeparam name="RT">Runtime</typeparam>
+        /// <typeparam name="A">Computation bound value type</typeparam>
+        /// <returns>The result of the last invocation of ma</returns>
+        public static Aff<RT, A> repeatWhile<RT, A>(Schedule schedule, Aff<RT, A> ma, Func<A, bool> predicate)
+            where RT : struct, HasCancel<RT>
+            => ScheduleAff<RT, A>.RepeatWhile(ma, schedule, predicate);
+
         /// <summary>
         /// Keeps repeating the computation until it fails or the predicate returns false
         /// </summary>
@@ -93,10 +145,20 @@ namespace LanguageExt
         /// <typeparam name="RT">Runtime</typeparam>
         /// <typeparam name="A">Computation bound value type</typeparam>
         /// <returns>The result of the last invocation of ma</returns>
-        public static Aff<A> repeatWhile<A>(Schedule schedule, Aff<A> ma, Func<A, bool> predicate) => 
-            ScheduleAff<A>.RepeatWhile(ma, schedule, predicate);
-        
-        
+        public static Aff<A> repeatWhile<A>(Schedule<A> schedule, Aff<A> ma, Func<A, bool> predicate)
+            => ScheduleAff<A>.RepeatWhile(ma, schedule, predicate);
+
+        /// <summary>
+        /// Keeps repeating the computation until it fails or the predicate returns false
+        /// </summary>
+        /// <param name="ma">Computation to repeat</param>
+        /// <param name="schedule">Scheduler strategy for repeating</param>
+        /// <typeparam name="RT">Runtime</typeparam>
+        /// <typeparam name="A">Computation bound value type</typeparam>
+        /// <returns>The result of the last invocation of ma</returns>
+        public static Aff<A> repeatWhile<A>(Schedule schedule, Aff<A> ma, Func<A, bool> predicate)
+            => ScheduleAff<A>.RepeatWhile(ma, schedule, predicate);
+
         /// <summary>
         /// Keeps repeating the computation until it fails or the predicate returns true
         /// </summary>
@@ -104,9 +166,10 @@ namespace LanguageExt
         /// <typeparam name="RT">Runtime</typeparam>
         /// <typeparam name="A">Computation bound value type</typeparam>
         /// <returns>The result of the last invocation of ma</returns>
-        public static Aff<RT, A> repeatUntil<RT, A>(Aff<RT, A> ma, Func<A, bool> predicate) where RT : struct, HasCancel<RT> =>
-            ScheduleAff<RT, A>.RepeatUntil(ma, Schedule.Forever, predicate);
-        
+        public static Aff<RT, A> repeatUntil<RT, A>(Aff<RT, A> ma, Func<A, bool> predicate)
+            where RT : struct, HasCancel<RT>
+            => ScheduleAff<RT, A>.RepeatUntil(ma, Schedule.Forever, predicate);
+
         /// <summary>
         /// Keeps repeating the computation until it fails or the predicate returns true
         /// </summary>
@@ -114,8 +177,8 @@ namespace LanguageExt
         /// <typeparam name="RT">Runtime</typeparam>
         /// <typeparam name="A">Computation bound value type</typeparam>
         /// <returns>The result of the last invocation of ma</returns>
-        public static Aff<A> repeatUntil<A>(Aff<A> ma, Func<A, bool> predicate) => 
-            ScheduleAff<A>.RepeatUntil(ma, Schedule.Forever, predicate);
+        public static Aff<A> repeatUntil<A>(Aff<A> ma, Func<A, bool> predicate)
+            => ScheduleAff<A>.RepeatUntil(ma, Schedule.Forever, predicate);
 
         /// <summary>
         /// Keeps repeating the computation until it fails or the predicate returns true
@@ -125,9 +188,10 @@ namespace LanguageExt
         /// <typeparam name="RT">Runtime</typeparam>
         /// <typeparam name="A">Computation bound value type</typeparam>
         /// <returns>The result of the last invocation of ma</returns>
-        public static Aff<RT, A> repeatUntil<RT, A>(Schedule schedule, Aff<RT, A> ma, Func<A, bool> predicate) where RT : struct, HasCancel<RT> =>
-            ScheduleAff<RT, A>.RepeatUntil(ma, schedule, predicate);
-        
+        public static Aff<RT, A> repeatUntil<RT, A>(Schedule<RT, A> schedule, Aff<RT, A> ma, Func<A, bool> predicate)
+            where RT : struct, HasCancel<RT>
+            => ScheduleAff<RT, A>.RepeatUntil(ma, schedule, predicate);
+
         /// <summary>
         /// Keeps repeating the computation until it fails or the predicate returns true
         /// </summary>
@@ -136,7 +200,42 @@ namespace LanguageExt
         /// <typeparam name="RT">Runtime</typeparam>
         /// <typeparam name="A">Computation bound value type</typeparam>
         /// <returns>The result of the last invocation of ma</returns>
-        public static Aff<A> repeatUntil<A>(Schedule schedule, Aff<A> ma, Func<A, bool> predicate) => 
-            ScheduleAff<A>.RepeatUntil(ma, schedule, predicate);
+        public static Aff<RT, A> repeatUntil<RT, A>(Schedule<A> schedule, Aff<RT, A> ma, Func<A, bool> predicate)
+            where RT : struct, HasCancel<RT>
+            => ScheduleAff<RT, A>.RepeatUntil(ma, schedule, predicate);
+
+        /// <summary>
+        /// Keeps repeating the computation until it fails or the predicate returns true
+        /// </summary>
+        /// <param name="ma">Computation to repeat</param>
+        /// <param name="schedule">Scheduler strategy for repeating</param>
+        /// <typeparam name="RT">Runtime</typeparam>
+        /// <typeparam name="A">Computation bound value type</typeparam>
+        /// <returns>The result of the last invocation of ma</returns>
+        public static Aff<RT, A> repeatUntil<RT, A>(Schedule schedule, Aff<RT, A> ma, Func<A, bool> predicate)
+            where RT : struct, HasCancel<RT>
+            => ScheduleAff<RT, A>.RepeatUntil(ma, schedule, predicate);
+
+        /// <summary>
+        /// Keeps repeating the computation until it fails or the predicate returns true
+        /// </summary>
+        /// <param name="ma">Computation to repeat</param>
+        /// <param name="schedule">Scheduler strategy for repeating</param>
+        /// <typeparam name="RT">Runtime</typeparam>
+        /// <typeparam name="A">Computation bound value type</typeparam>
+        /// <returns>The result of the last invocation of ma</returns>
+        public static Aff<A> repeatUntil<A>(Schedule<A> schedule, Aff<A> ma, Func<A, bool> predicate)
+            => ScheduleAff<A>.RepeatUntil(ma, schedule, predicate);
+
+        /// <summary>
+        /// Keeps repeating the computation until it fails or the predicate returns true
+        /// </summary>
+        /// <param name="ma">Computation to repeat</param>
+        /// <param name="schedule">Scheduler strategy for repeating</param>
+        /// <typeparam name="RT">Runtime</typeparam>
+        /// <typeparam name="A">Computation bound value type</typeparam>
+        /// <returns>The result of the last invocation of ma</returns>
+        public static Aff<A> repeatUntil<A>(Schedule schedule, Aff<A> ma, Func<A, bool> predicate)
+            => ScheduleAff<A>.RepeatUntil(ma, schedule, predicate);
     }
 }

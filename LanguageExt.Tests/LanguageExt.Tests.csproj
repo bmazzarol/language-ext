@@ -18,6 +18,7 @@
         <PrivateAssets>all</PrivateAssets>
         <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
       </PackageReference>
+      <PackageReference Include="FluentAssertions" Version="6.2.0" />
       <PackageReference Include="System.Reactive" Version="[3,)" />
       <PackageReference Include="Newtonsoft.Json" Version="[10.0.3,)" />
     <PackageReference Include="Nito.AsyncEx" Version="[5.0.0,)" />
@@ -45,5 +46,22 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Transformer\Traverse\TryAsync" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Update="Schedule\Aff.Schedule.cs">
+      <Generator>MSBuild:GenerateCodeFromAttributes</Generator>
+    </Compile>
+    <Compile Update="Schedule\Aff.Schedule.FoldTests.cs">
+      <Generator>MSBuild:GenerateCodeFromAttributes</Generator>
+    </Compile>
+    <Compile Update="Schedule\Eff.Schedule.cs">
+      <Generator>MSBuild:GenerateCodeFromAttributes</Generator>
+    </Compile>
+    <Compile Update="Schedule\Eff.Schedule.FoldTests.cs">
+      <Generator>MSBuild:GenerateCodeFromAttributes</Generator>
+    </Compile>
+    <Compile Update="Schedule\ScheduleTests.cs">
+      <Generator>MSBuild:GenerateCodeFromAttributes</Generator>
+    </Compile>
   </ItemGroup>
 </Project>
