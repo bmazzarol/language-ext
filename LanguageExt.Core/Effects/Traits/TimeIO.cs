@@ -2,9 +2,8 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using LanguageExt.Attributes;
-using LanguageExt.Effects.Traits;
 
-namespace LanguageExt.Sys.Traits
+namespace LanguageExt.Effects.Traits
 {
     public interface TimeIO
     {

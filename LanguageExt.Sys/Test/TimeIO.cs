@@ -1,12 +1,10 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using LanguageExt.Effects.Traits;
-using static LanguageExt.Prelude;
 
 namespace LanguageExt.Sys.Test
 {
-    public readonly struct TimeIO : Sys.Traits.TimeIO
+    public readonly struct TimeIO : Effects.Traits.TimeIO
     {
         readonly TestTimeSpec spec;
 

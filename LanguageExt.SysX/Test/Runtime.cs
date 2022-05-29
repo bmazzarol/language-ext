@@ -2,11 +2,18 @@ using System;
 using System.Diagnostics;
 using System.Text;
 using System.Threading;
-using LanguageExt.Sys.Traits;
-using LanguageExt.Sys.Test;
-using static LanguageExt.Prelude;
+using LanguageExt.Effects.Traits;
 using LanguageExt.Sys;
+using LanguageExt.Sys.Test;
+using LanguageExt.Sys.Traits;
 using LanguageExt.SysX.Traits;
+using static LanguageExt.Prelude;
+using ConsoleIO = LanguageExt.Sys.Traits.ConsoleIO;
+using DirectoryIO = LanguageExt.Sys.Traits.DirectoryIO;
+using EnvironmentIO = LanguageExt.Sys.Traits.EnvironmentIO;
+using FileIO = LanguageExt.Sys.Traits.FileIO;
+using TextReadIO = LanguageExt.Sys.Traits.TextReadIO;
+using TimeIO = LanguageExt.Sys.Test.TimeIO;
 
 namespace LanguageExt.SysX.Test
 {
@@ -159,53 +166,53 @@ namespace LanguageExt.SysX.Test
         /// </summary>
         /// <returns>Operating-system environment environment</returns>
         public Eff<Runtime, ActivitySourceIO> ActivitySourceEff =>
-            Eff<Runtime, ActivitySourceIO>(rt => new LanguageExt.SysX.Live.ActivitySourceIO(rt.Env.Activity.ActivitySource));
+            Eff<Runtime, ActivitySourceIO>(rt => new Live.ActivitySourceIO(rt.Env.Activity.ActivitySource));
         
         /// <summary>
         /// Access the console environment
         /// </summary>
         /// <returns>Console environment</returns>
-        public Eff<Runtime, LanguageExt.Sys.Traits.ConsoleIO> ConsoleEff =>
-            Eff<Runtime, LanguageExt.Sys.Traits.ConsoleIO>(rt => new LanguageExt.Sys.Test.ConsoleIO(rt.Env.Console));
+        public Eff<Runtime, ConsoleIO> ConsoleEff =>
+            Eff<Runtime, ConsoleIO>(rt => new Sys.Test.ConsoleIO(rt.Env.Console));
 
         /// <summary>
         /// Access the file environment
         /// </summary>
         /// <returns>File environment</returns>
-        public Eff<Runtime, LanguageExt.Sys.Traits.FileIO> FileEff =>
+        public Eff<Runtime, FileIO> FileEff =>
             from n in Time<Runtime>.now
-            from r in Eff<Runtime, LanguageExt.Sys.Traits.FileIO>(rt => new LanguageExt.Sys.Test.FileIO(rt.Env.FileSystem, n))
+            from r in Eff<Runtime, FileIO>(rt => new Sys.Test.FileIO(rt.Env.FileSystem, n))
             select r;
 
         /// <summary>
         /// Access the directory environment
         /// </summary>
         /// <returns>Directory environment</returns>
-        public Eff<Runtime, LanguageExt.Sys.Traits.DirectoryIO> DirectoryEff =>
+        public Eff<Runtime, DirectoryIO> DirectoryEff =>
             from n in Time<Runtime>.now
-            from r in Eff<Runtime, LanguageExt.Sys.Traits.DirectoryIO>(rt => new LanguageExt.Sys.Test.DirectoryIO(rt.Env.FileSystem, n))
+            from r in Eff<Runtime, DirectoryIO>(rt => new Sys.Test.DirectoryIO(rt.Env.FileSystem, n))
             select r;
         
         /// <summary>
         /// Access the TextReader environment
         /// </summary>
         /// <returns>TextReader environment</returns>
-        public Eff<Runtime, LanguageExt.Sys.Traits.TextReadIO> TextReadEff =>
-            SuccessEff(LanguageExt.Sys.Test.TextReadIO.Default);
+        public Eff<Runtime, TextReadIO> TextReadEff =>
+            SuccessEff(Sys.Test.TextReadIO.Default);
 
         /// <summary>
         /// Access the time environment
         /// </summary>
         /// <returns>Time environment</returns>
-        public Eff<Runtime, LanguageExt.Sys.Traits.TimeIO> TimeEff  =>
-            Eff<Runtime, LanguageExt.Sys.Traits.TimeIO>(rt => new LanguageExt.Sys.Test.TimeIO(rt.Env.TimeSpec));
+        public Eff<Runtime, Effects.Traits.TimeIO> TimeEff  =>
+            Eff<Runtime, Effects.Traits.TimeIO>(rt => new TimeIO(rt.Env.TimeSpec));
 
         /// <summary>
         /// Access the operating-system environment
         /// </summary>
         /// <returns>Operating-system environment environment</returns>
-        public Eff<Runtime, LanguageExt.Sys.Traits.EnvironmentIO> EnvironmentEff =>
-            Eff<Runtime, LanguageExt.Sys.Traits.EnvironmentIO>(rt => new LanguageExt.Sys.Test.EnvironmentIO(rt.Env.SysEnv));
+        public Eff<Runtime, EnvironmentIO> EnvironmentEff =>
+            Eff<Runtime, EnvironmentIO>(rt => new Sys.Test.EnvironmentIO(rt.Env.SysEnv));
     }
     
     public record RuntimeEnv(

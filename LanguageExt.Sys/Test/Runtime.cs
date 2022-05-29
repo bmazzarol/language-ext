@@ -150,8 +150,8 @@ namespace LanguageExt.Sys.Test
         /// Access the time environment
         /// </summary>
         /// <returns>Time environment</returns>
-        public Eff<Runtime, Traits.TimeIO> TimeEff  =>
-            Eff<Runtime, Traits.TimeIO>(rt => new Test.TimeIO(rt.Env.TimeSpec));
+        public Eff<Runtime, Effects.Traits.TimeIO> TimeEff  =>
+            Eff<Runtime, Effects.Traits.TimeIO>(rt => new Test.TimeIO(rt.Env.TimeSpec));
 
         /// <summary>
         /// Access the operating-system environment

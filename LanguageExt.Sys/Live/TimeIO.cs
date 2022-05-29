@@ -1,13 +1,12 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using LanguageExt.Effects.Traits;
 
 namespace LanguageExt.Sys.Live
 {
-    public readonly struct TimeIO : Sys.Traits.TimeIO
+    public readonly struct TimeIO : Effects.Traits.TimeIO
     {
-        public readonly static Sys.Traits.TimeIO Default =
+        public static readonly Effects.Traits.TimeIO Default =
             new TimeIO();
  
         /// <summary>
@@ -40,7 +39,7 @@ namespace LanguageExt.Sys.Live
         /// </summary>
         public async ValueTask<Unit> SleepFor(TimeSpan ts, CancellationToken token)        
         {
-            await Task.Delay(ts).ConfigureAwait(false);
+            await Task.Delay(ts, token).ConfigureAwait(false);
             return default;
         }
     }

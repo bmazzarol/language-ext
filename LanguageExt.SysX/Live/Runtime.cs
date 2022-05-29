@@ -1,8 +1,8 @@
 using System;
+using System.Diagnostics;
 using System.Text;
 using System.Threading;
-using System.Diagnostics;
-using System.Reflection;
+using LanguageExt.Effects.Traits;
 using LanguageExt.Sys.Traits;
 using LanguageExt.SysX.Traits;
 using static LanguageExt.Prelude;
@@ -115,8 +115,8 @@ namespace LanguageExt.SysX.Live
         /// Activity source environment
         /// </summary>
         /// <returns>Operating-system environment environment</returns>
-        public Eff<Runtime, LanguageExt.SysX.Traits.ActivitySourceIO> ActivitySourceEff =>
-            Eff<Runtime, LanguageExt.SysX.Traits.ActivitySourceIO>(rt => new ActivitySourceIO(rt.Env.Activity.ActivitySource));
+        public Eff<Runtime, Traits.ActivitySourceIO> ActivitySourceEff =>
+            Eff<Runtime, Traits.ActivitySourceIO>(rt => new ActivitySourceIO(rt.Env.Activity.ActivitySource));
 
         /// <summary>
         /// Access the console environment

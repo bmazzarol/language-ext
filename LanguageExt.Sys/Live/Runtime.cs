@@ -124,7 +124,7 @@ namespace LanguageExt.Sys.Live
         /// Access the time environment
         /// </summary>
         /// <returns>Time environment</returns>
-        public Eff<Runtime, Traits.TimeIO> TimeEff  =>
+        public Eff<Runtime, Effects.Traits.TimeIO> TimeEff  =>
             SuccessEff(Sys.Live.TimeIO.Default);
 
         /// <summary>
